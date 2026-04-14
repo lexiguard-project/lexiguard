@@ -44,7 +44,6 @@ st.markdown("""
         border: 2px solid #F59E0B; margin-top: 15px;
     }
     
-    /* Style spécifique pour le Disclaimer */
     .disclaimer-box {
         font-size: 12px; color: #64748B; background: #F1F5F9; 
         padding: 20px; border-radius: 15px; margin-top: 50px; 
@@ -57,6 +56,7 @@ st.markdown("""
 if 'page' not in st.session_state: st.session_state.page = 'accueil'
 if 'logged_in' not in st.session_state: st.session_state.logged_in = False
 if 'paid' not in st.session_state: st.session_state.paid = False
+if 'show_details' not in st.session_state: st.session_state.show_details = False
 if 'show_payment' not in st.session_state: st.session_state.show_payment = False
 if 'audit_run' not in st.session_state: st.session_state.audit_run = False
 
@@ -72,6 +72,8 @@ with col_nav2:
             st.session_state.logged_in = False
             st.session_state.paid = False
             st.session_state.audit_run = False
+            st.session_state.show_details = False
+            st.session_state.show_payment = False
             st.rerun()
 
 if base64_logo != "TON_CODE_ICI":
@@ -84,24 +86,22 @@ if st.session_state.page == 'accueil':
     st.markdown("""
         <div style="background:white; padding:30px; border-radius:25px; margin-bottom:30px; border:1px solid #E2E8F0;">
             <h3 style="color:#1E3A8A; margin-top:0;">🛡️ Comment Lexiguard vous protège ?</h3>
-            <p>Lexiguard est une plateforme d'analyse juridique intelligente qui transforme des documents complexes en informations claires et exploitables. Notre technologie scanne instantanément vos contrats pour identifier les clauses à risque (délais de préavis excessifs, frais cachés, pénalités injustifiées) et vous offre les outils nécessaires pour négocier sereinement vos engagements.</p>
+            <p>Lexiguard est une plateforme d'analyse juridique intelligente qui transforme des documents complexes en informations claires et exploitables. Notre technologie scanne instantanément vos contrats pour identifier les clauses à risque et vous offre les outils nécessaires pour négocier sereinement vos engagements.</p>
         </div>
         """, unsafe_allow_html=True)
 
-    # Étapes visuelles
     st.markdown("### 🛠️ Votre audit en 3 étapes")
     c1, c2, c3 = st.columns(3)
-    with c1: st.markdown('<div class="step-card"><h2>📥</h2><h4>1. Import</h4><p>Déposez votre PDF ou Photo de contrat.</p></div>', unsafe_allow_html=True)
-    with c2: st.markdown('<div class="step-card" style="border-top-color:#F59E0B;"><h2>🔍</h2><h4>2. Analyse IA</h4><p>Scan complet des risques et obligations.</p></div>', unsafe_allow_html=True)
-    with c3: st.markdown('<div class="step-card" style="border-top-color:#1E3A8A;"><h2>✅</h2><h4>3. Verdict</h4><p>Rapport détaillé et aide à la négociation.</p></div>', unsafe_allow_html=True)
+    with c1: st.markdown('<div class="step-card"><h2>📥</h2><h4>1. Import</h4><p>Déposez votre document.</p></div>', unsafe_allow_html=True)
+    with c2: st.markdown('<div class="step-card" style="border-top-color:#F59E0B;"><h2>🔍</h2><h4>2. Analyse IA</h4><p>Scan complet des risques.</p></div>', unsafe_allow_html=True)
+    with c3: st.markdown('<div class="step-card" style="border-top-color:#1E3A8A;"><h2>✅</h2><h4>3. Verdict</h4><p>Rapport et aide à la négociation.</p></div>', unsafe_allow_html=True)
 
-    # Tarifs
     st.markdown("### 💎 Nos Offres")
     p1, p2 = st.columns(2)
     with p1:
-        st.markdown("""<div class="price-card"><h3>Offre Particulier</h3><h2 style="color:#1E3A8A;">2,99€ <small>/audit</small></h2><p>• 1ère clause <b>Offerte</b><br>• Audit complet détaillé<br>• Anonymat garanti</p></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="price-card"><h3>Offre Particulier</h3><h2 style="color:#1E3A8A;">2,99€ <small>/audit</small></h2><p>• 1ère clause <b>Offerte</b><br>• Audit complet détaillé</p></div>""", unsafe_allow_html=True)
     with p2:
-        st.markdown("""<div class="price-card pro"><h3>Offre Professionnel</h3><h2 style="color:#F59E0B;">15,99€ <small>/mois</small></h2><p>• Audits <b>Illimités</b><br>• <b>Génération de contre-clauses</b><br>• Espace client dédié</p></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="price-card pro"><h3>Offre Professionnel</h3><h2 style="color:#F59E0B;">15,99€ <small>/mois</small></h2><p>• Audits <b>Illimités</b><br>• Génération de contre-clauses</p></div>""", unsafe_allow_html=True)
 
     if st.button("🚀 TESTER L'ANALYSEUR"):
         st.session_state.page = 'analyse'
@@ -112,6 +112,8 @@ else:
     if st.button("← Retour"):
         st.session_state.page = 'accueil'
         st.session_state.audit_run = False
+        st.session_state.show_details = False
+        st.session_state.show_payment = False
         st.session_state.paid = False
         st.rerun()
     
@@ -133,34 +135,49 @@ else:
     with col_right:
         st.markdown("### 📋 Rapport d'Audit")
         if st.session_state.audit_run:
+            # CLAUSE GRATUITE
             st.markdown("""<div style="background:#FFF5F5; padding:15px; border-radius:12px; border-left:8px solid #EF4444; margin-bottom:15px;">
                 <b style="color:#B91C1C;">🔍 APERÇU GRATUIT :</b><br>
                 <b>Art. 12 - Résiliation :</b> Préavis de 4 mois requis.<br>
                 <i>Risque : Délai excessif détecté.</i></div>""", unsafe_allow_html=True)
             
+            # LOGIQUE MODE PRO
             if st.session_state.logged_in:
-                st.success("Accès Pro Illimité Activé")
+                st.success("Accès Pro Illimité")
                 st.markdown("""<div style="background:#FFFBEB; padding:15px; border-radius:12px; border:1px solid #F59E0B;">
                     <b style="color:#92400E;">✨ CLAUSE DE RE-NÉGOCIATION :</b><br>
                     <i>"Chaque partie peut résilier avec un préavis de 30 jours."</i></div>""", unsafe_allow_html=True)
             
+            # LOGIQUE PARTICULIER PAYÉ
             elif st.session_state.paid:
                 st.success("✅ Audit complet débloqué")
                 st.markdown("<p><b>Art 8. :</b> Risque de tacite reconduction identifié au 31 décembre.</p>", unsafe_allow_html=True)
             
-            elif not st.session_state.show_payment:
-                st.markdown("""<div class="blur-text">Clause de pénalités de retard...</div>
-                <div class="blur-text">Exclusion de garantie...</div>""", unsafe_allow_html=True)
-                if st.button("💳 DÉBLOQUER L'AUDIT COMPLET (2,99€)"):
+            # ÉTAPE INTERMÉDIAIRE "VOIR PLUS"
+            elif not st.session_state.show_details:
+                st.info("🎯 3 autres points de vigilance détectés dans votre contrat.")
+                if st.button("👁️ VOIR L'ANALYSE DÉTAILLÉE"):
+                    st.session_state.show_details = True
+                    st.rerun()
+            
+            # ÉTAPE PAIEMENT
+            elif st.session_state.show_details and not st.session_state.show_payment:
+                st.markdown("""
+                    <div class="blur-text">⚠️ Clause de pénalités de retard (Risque financier)</div>
+                    <div class="blur-text">⚠️ Clause d'exclusion de garantie (Risque juridique)</div>
+                    <div class="blur-text">⚠️ Clause de compétence territoriale (Risque procédure)</div>
+                """, unsafe_allow_html=True)
+                if st.button("💳 DÉBLOQUER LES RÉSULTATS (2,99€)"):
                     st.session_state.show_payment = True
                     st.rerun()
 
+            # FORMULAIRE CARTE
             if st.session_state.show_payment and not st.session_state.paid:
                 with st.container():
                     st.markdown('<div class="payment-form">', unsafe_allow_html=True)
                     st.subheader("💳 Paiement Sécurisé")
                     st.text_input("Numéro de Carte", placeholder="xxxx xxxx xxxx xxxx")
-                    if st.button("VALIDER LE PAIEMENT (2,99€)"):
+                    if st.button("CONFIRMER ET PAYER 2,99€"):
                         st.session_state.paid = True
                         st.session_state.show_payment = False
                         st.rerun()
@@ -168,13 +185,12 @@ else:
         else:
             st.info("Importez un document pour lancer l'audit.")
 
-# --- DISCLAIMER FINAL (Trés visible) ---
+# Disclaimer
 st.markdown("""
     <div class="disclaimer-box">
         <b>⚖️ AVERTISSEMENT JURIDIQUE (DISCLAIMER) :</b><br>
-        Lexiguard est un assistant basé sur l'intelligence artificielle destiné à faciliter la compréhension de documents juridiques. 
-        <b>Cet outil ne constitue en aucun cas un conseil juridique personnalisé et ne remplace pas l'avis d'un avocat ou d'un professionnel du droit.</b> 
-        L'utilisateur est seul responsable de l'usage fait des informations fournies. Lexiguard ne peut être tenu responsable des conséquences liées à la signature ou à la négociation d'un contrat.<br><br>
-        <b>🔒 CONFIDENTIALITÉ :</b> Vos documents sont traités de manière anonyme et ne sont jamais conservés sur nos serveurs après l'analyse. Lexiguard 2026.
+        Lexiguard est un assistant basé sur l'intelligence artificielle. 
+        <b>Cet outil ne remplace pas l'avis d'un avocat.</b> L'utilisateur est seul responsable de l'usage fait des informations fournies.<br>
+        <b>🔒 CONFIDENTIALITÉ :</b> Vos documents sont traités de manière anonyme et ne sont jamais conservés après l'analyse. Lexiguard 2026.
     </div>
 """, unsafe_allow_html=True)
