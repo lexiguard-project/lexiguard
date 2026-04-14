@@ -11,7 +11,7 @@ base64_logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAsAAAADmCAIAAABUJ6S
 st.markdown("""
     <style>
     .stApp { background-color: #F8FAFC; }
-    .logo-container { text-align: center; padding: 10px 0; }
+    .logo-container { text-align: center; padding: 20px 0; }
     .logo-img { width: 380px; mix-blend-mode: multiply; }
     
     .hero-box { 
@@ -46,14 +46,14 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- INITIALISATION DES ÉTATS (CRITIQUE POUR LES BOUTONS) ---
+# --- INITIALISATION DES ÉTATS ---
 if 'page' not in st.session_state: st.session_state.page = 'accueil'
 if 'logged_in' not in st.session_state: st.session_state.logged_in = False
 if 'paid' not in st.session_state: st.session_state.paid = False
 if 'show_payment' not in st.session_state: st.session_state.show_payment = False
 if 'audit_run' not in st.session_state: st.session_state.audit_run = False
 
-# --- BARRE DE NAVIGATION ---
+# Barre de navigation (Login Pro)
 col_nav1, col_nav2 = st.columns([4, 1])
 with col_nav2:
     if not st.session_state.logged_in:
@@ -72,29 +72,32 @@ if base64_logo != "TON_CODE_ICI":
 
 # --- PAGE 1 : ACCUEIL ---
 if st.session_state.page == 'accueil':
-    st.markdown('<div class="hero-box"><h1 style="color:white !important; font-size:2.8em;">Sécurisez vos contrats en 10 secondes.</h1><p style="font-size:1.2em; opacity:0.9;">Comprendre les contrats. Prendre de meilleures décisions.</p></div>', unsafe_allow_html=True)
-
-    st.markdown("### 🛠️ Votre audit en 3 étapes")
-    c1, c2, c3 = st.columns(3)
-    with c1: st.markdown('<div class="step-card"><h2>📥</h2><h4>1. Import</h4><p>Déposez votre PDF ou Photo.</p></div>', unsafe_allow_html=True)
-    with c2: st.markdown('<div class="step-card" style="border-top-color:#F59E0B;"><h2>🔍</h2><h4>2. Audit IA</h4><p>Scan automatique des risques.</p></div>', unsafe_allow_html=True)
-    with c3: st.markdown('<div class="step-card" style="border-top-color:#1E3A8A;"><h2>✅</h2><h4>3. Verdict</h4><p>Rapport et conseils d\'experts.</p></div>', unsafe_allow_html=True)
-
+    st.markdown('<div class="hero-box"><h1 style="color:white !important;">Lexiguard : Comprendre vos contrats.</h1><p style="font-size:1.2em; opacity:0.9;">Prendre de meilleures décisions grâce à l\'intelligence artificielle.</p></div>', unsafe_allow_html=True)
+    
+    # Nouvelle explication de l'outil
     st.markdown("""
-        <div style="background:white; padding:30px; border-radius:25px; margin-top:30px; border:1px solid #E2E8F0;">
-            <h3 style="color:#1E3A8A; margin-top:0;">🛡️ Notre Mission & Différence</h3>
-            <p>Contrairement aux outils de lecture simple, Lexiguard est un <b>véritable bouclier décisionnel</b>. Nous ne nous contentons pas de résumer : nous révélons les pièges financiers et juridiques (préavis abusifs, frais cachés) et fournissons aux professionnels des <b>contre-clauses prêtes à l'emploi</b> pour reprendre le contrôle sur leurs contrats.</p>
+        <div style="background:white; padding:30px; border-radius:25px; margin-bottom:30px; border:1px solid #E2E8F0;">
+            <h3 style="color:#1E3A8A; margin-top:0;">🛡️ Comment Lexiguard vous protège ?</h3>
+            <p>Lexiguard est une plateforme d'analyse juridique intelligente qui transforme des documents complexes en informations claires et exploitables. Notre technologie scanne instantanément vos contrats pour identifier les clauses à risque (délais de préavis excessifs, frais cachés, pénalités injustifiées) et vous offre les outils nécessaires pour négocier sereinement vos engagements.</p>
         </div>
         """, unsafe_allow_html=True)
 
+    # Étapes visuelles
+    st.markdown("### 🛠️ Votre audit en 3 étapes")
+    c1, c2, c3 = st.columns(3)
+    with c1: st.markdown('<div class="step-card"><h2>📥</h2><h4>1. Import</h4><p>Déposez votre PDF ou Photo de contrat.</p></div>', unsafe_allow_html=True)
+    with c2: st.markdown('<div class="step-card" style="border-top-color:#F59E0B;"><h2>🔍</h2><h4>2. Analyse IA</h4><p>Scan complet des risques et obligations.</p></div>', unsafe_allow_html=True)
+    with c3: st.markdown('<div class="step-card" style="border-top-color:#1E3A8A;"><h2>✅</h2><h4>3. Verdict</h4><p>Rapport détaillé et aide à la négociation.</p></div>', unsafe_allow_html=True)
+
+    # Tarifs
     st.markdown("### 💎 Nos Offres")
     p1, p2 = st.columns(2)
     with p1:
-        st.markdown("""<div class="price-card"><h3>Particulier</h3><h2 style="color:#1E3A8A;">2,99€ <small>/audit</small></h2><p>• 1ère clause <b>Gratuite</b><br>• Audit complet détaillé</p></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="price-card"><h3>Offre Particulier</h3><h2 style="color:#1E3A8A;">2,99€ <small>/audit</small></h2><p>• 1ère clause <b>Offerte</b><br>• Audit complet détaillé<br>• Anonymat garanti</p></div>""", unsafe_allow_html=True)
     with p2:
-        st.markdown("""<div class="price-card pro"><h3>Professionnel</h3><h2 style="color:#F59E0B;">15,99€ <small>/mois</small></h2><p>• Audits <b>Illimités</b><br>• Génération de contre-clauses</p></div>""", unsafe_allow_html=True)
+        st.markdown("""<div class="price-card pro"><h3>Offre Professionnel</h3><h2 style="color:#F59E0B;">15,99€ <small>/mois</small></h2><p>• Audits <b>Illimités</b><br>• <b>Génération de contre-clauses</b><br>• Espace client dédié</p></div>""", unsafe_allow_html=True)
 
-    if st.button("🚀 TESTER L'ANALYSEUR (1ÈRE CLAUSE OFFERTE)"):
+    if st.button("🚀 TESTER L'ANALYSEUR"):
         st.session_state.page = 'analyse'
         st.rerun()
 
@@ -111,52 +114,58 @@ else:
     with col_left:
         st.markdown("### 📥 Importation")
         with st.container(border=True):
-            txt = st.text_area("Contenu du contrat...", height=200)
-            st.file_uploader("Fichier", type=['pdf','png','jpg'])
-            # Correction ici : Le bouton active une variable d'état
+            txt = st.text_area("Collez le texte du contrat...", height=150)
+            uploaded_file = st.file_uploader("OU déposez un fichier", type=['pdf', 'png', 'jpg', 'jpeg'])
+            st.checkbox("🛡️ Anonymisation RGPD Active", value=True)
+            
             if st.button("LANCER L'AUDIT LEXIGUARD"):
-                if txt:
+                if txt or uploaded_file:
                     st.session_state.audit_run = True
+                    st.toast("Analyse en cours...")
                 else:
-                    st.warning("Veuillez entrer du texte ou un fichier.")
+                    st.error("⚠️ Veuillez fournir un texte ou un fichier.")
 
     with col_right:
         st.markdown("### 📋 Rapport d'Audit")
-        # On n'affiche les résultats QUE si le bouton a été cliqué
         if st.session_state.audit_run:
+            # CLAUSE GRATUITE VISIBLE
             st.markdown("""<div style="background:#FFF5F5; padding:15px; border-radius:12px; border-left:8px solid #EF4444; margin-bottom:15px;">
                 <b style="color:#B91C1C;">🔍 APERÇU GRATUIT :</b><br>
                 <b>Art. 12 - Résiliation :</b> Préavis de 4 mois requis.<br>
-                <i>Risque : Délai excessif détecté (Légal : 1-3 mois).</i></div>""", unsafe_allow_html=True)
+                <i>Risque : Délai excessif détecté.</i></div>""", unsafe_allow_html=True)
             
+            # MODE PRO CONNECTÉ
             if st.session_state.logged_in:
-                st.success("Mode Pro : Audit complet débloqué")
+                st.success("Accès Pro Illimité Activé")
                 st.markdown("""<div style="background:#FFFBEB; padding:15px; border-radius:12px; border:1px solid #F59E0B;">
-                    <b style="color:#92400E;">✨ CLAUSE DE RECHANGE PRO :</b><br>
-                    <i>"Le préavis est de 30 jours."</i></div>""", unsafe_allow_html=True)
+                    <b style="color:#92400E;">✨ CLAUSE DE RE-NÉGOCIATION :</b><br>
+                    <i>"Chaque partie peut résilier avec un préavis de 30 jours."</i></div>""", unsafe_allow_html=True)
             
+            # PARTICULIER PAYÉ
             elif st.session_state.paid:
-                st.success("✅ Audit complet (Paiement validé)")
-                st.markdown("<p>Art 8. : Tacite reconduction détectée.</p>", unsafe_allow_html=True)
+                st.success("✅ Audit complet débloqué")
+                st.markdown("<p><b>Art 8. :</b> Risque de tacite reconduction identifié.</p>", unsafe_allow_html=True)
             
+            # BESOIN DE PAIEMENT
             elif not st.session_state.show_payment:
                 st.markdown("""<div class="blur-text">Clause de pénalités de retard...</div>
-                <div class="blur-text">Indemnités masquées...</div>""", unsafe_allow_html=True)
+                <div class="blur-text">Exclusion de garantie...</div>""", unsafe_allow_html=True)
                 if st.button("💳 DÉBLOQUER L'AUDIT COMPLET (2,99€)"):
                     st.session_state.show_payment = True
                     st.rerun()
 
+            # FORMULAIRE PAIEMENT
             if st.session_state.show_payment and not st.session_state.paid:
                 with st.container():
                     st.markdown('<div class="payment-form">', unsafe_allow_html=True)
                     st.subheader("💳 Paiement Sécurisé")
-                    st.text_input("Carte", placeholder="0000 0000 0000 0000")
-                    if st.button("PAYER 2,99€"):
+                    st.text_input("Numéro de Carte", placeholder="xxxx xxxx xxxx xxxx")
+                    if st.button("VALIDER LE PAIEMENT (2,99€)"):
                         st.session_state.paid = True
                         st.session_state.show_payment = False
                         st.rerun()
                     st.markdown('</div>', unsafe_allow_html=True)
         else:
-            st.info("En attente de l'importation du contrat...")
+            st.info("Importez un document pour lancer l'audit.")
 
-st.markdown("<div style='text-align:center; color:gray; margin-top:50px; font-size:11px;'>Lexiguard 2026 - Protection Juridique IA Anonymisée</div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align:center; color:gray; margin-top:50px; font-size:11px;'>Lexiguard 2026 - Protection Juridique IA</div>", unsafe_allow_html=True)
