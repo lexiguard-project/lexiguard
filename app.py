@@ -43,6 +43,13 @@ st.markdown("""
         background: #FFFFFF; padding: 20px; border-radius: 15px;
         border: 2px solid #F59E0B; margin-top: 15px;
     }
+    
+    /* Style spécifique pour le Disclaimer */
+    .disclaimer-box {
+        font-size: 12px; color: #64748B; background: #F1F5F9; 
+        padding: 20px; border-radius: 15px; margin-top: 50px; 
+        border-left: 5px solid #0F172A; line-height: 1.5;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -53,7 +60,7 @@ if 'paid' not in st.session_state: st.session_state.paid = False
 if 'show_payment' not in st.session_state: st.session_state.show_payment = False
 if 'audit_run' not in st.session_state: st.session_state.audit_run = False
 
-# Barre de navigation (Login Pro)
+# Barre de navigation
 col_nav1, col_nav2 = st.columns([4, 1])
 with col_nav2:
     if not st.session_state.logged_in:
@@ -74,7 +81,6 @@ if base64_logo != "TON_CODE_ICI":
 if st.session_state.page == 'accueil':
     st.markdown('<div class="hero-box"><h1 style="color:white !important;">Lexiguard : Comprendre vos contrats.</h1><p style="font-size:1.2em; opacity:0.9;">Prendre de meilleures décisions grâce à l\'intelligence artificielle.</p></div>', unsafe_allow_html=True)
     
-    # Nouvelle explication de l'outil
     st.markdown("""
         <div style="background:white; padding:30px; border-radius:25px; margin-bottom:30px; border:1px solid #E2E8F0;">
             <h3 style="color:#1E3A8A; margin-top:0;">🛡️ Comment Lexiguard vous protège ?</h3>
@@ -121,32 +127,27 @@ else:
             if st.button("LANCER L'AUDIT LEXIGUARD"):
                 if txt or uploaded_file:
                     st.session_state.audit_run = True
-                    st.toast("Analyse en cours...")
                 else:
                     st.error("⚠️ Veuillez fournir un texte ou un fichier.")
 
     with col_right:
         st.markdown("### 📋 Rapport d'Audit")
         if st.session_state.audit_run:
-            # CLAUSE GRATUITE VISIBLE
             st.markdown("""<div style="background:#FFF5F5; padding:15px; border-radius:12px; border-left:8px solid #EF4444; margin-bottom:15px;">
                 <b style="color:#B91C1C;">🔍 APERÇU GRATUIT :</b><br>
                 <b>Art. 12 - Résiliation :</b> Préavis de 4 mois requis.<br>
                 <i>Risque : Délai excessif détecté.</i></div>""", unsafe_allow_html=True)
             
-            # MODE PRO CONNECTÉ
             if st.session_state.logged_in:
                 st.success("Accès Pro Illimité Activé")
                 st.markdown("""<div style="background:#FFFBEB; padding:15px; border-radius:12px; border:1px solid #F59E0B;">
                     <b style="color:#92400E;">✨ CLAUSE DE RE-NÉGOCIATION :</b><br>
                     <i>"Chaque partie peut résilier avec un préavis de 30 jours."</i></div>""", unsafe_allow_html=True)
             
-            # PARTICULIER PAYÉ
             elif st.session_state.paid:
                 st.success("✅ Audit complet débloqué")
-                st.markdown("<p><b>Art 8. :</b> Risque de tacite reconduction identifié.</p>", unsafe_allow_html=True)
+                st.markdown("<p><b>Art 8. :</b> Risque de tacite reconduction identifié au 31 décembre.</p>", unsafe_allow_html=True)
             
-            # BESOIN DE PAIEMENT
             elif not st.session_state.show_payment:
                 st.markdown("""<div class="blur-text">Clause de pénalités de retard...</div>
                 <div class="blur-text">Exclusion de garantie...</div>""", unsafe_allow_html=True)
@@ -154,7 +155,6 @@ else:
                     st.session_state.show_payment = True
                     st.rerun()
 
-            # FORMULAIRE PAIEMENT
             if st.session_state.show_payment and not st.session_state.paid:
                 with st.container():
                     st.markdown('<div class="payment-form">', unsafe_allow_html=True)
@@ -168,4 +168,13 @@ else:
         else:
             st.info("Importez un document pour lancer l'audit.")
 
-st.markdown("<div style='text-align:center; color:gray; margin-top:50px; font-size:11px;'>Lexiguard 2026 - Protection Juridique IA</div>", unsafe_allow_html=True)
+# --- DISCLAIMER FINAL (Trés visible) ---
+st.markdown("""
+    <div class="disclaimer-box">
+        <b>⚖️ AVERTISSEMENT JURIDIQUE (DISCLAIMER) :</b><br>
+        Lexiguard est un assistant basé sur l'intelligence artificielle destiné à faciliter la compréhension de documents juridiques. 
+        <b>Cet outil ne constitue en aucun cas un conseil juridique personnalisé et ne remplace pas l'avis d'un avocat ou d'un professionnel du droit.</b> 
+        L'utilisateur est seul responsable de l'usage fait des informations fournies. Lexiguard ne peut être tenu responsable des conséquences liées à la signature ou à la négociation d'un contrat.<br><br>
+        <b>🔒 CONFIDENTIALITÉ :</b> Vos documents sont traités de manière anonyme et ne sont jamais conservés sur nos serveurs après l'analyse. Lexiguard 2026.
+    </div>
+""", unsafe_allow_html=True)
