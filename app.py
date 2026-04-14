@@ -36,14 +36,14 @@ else:
     # Tout le reste du code (st.markdown...)
 else:
     st.markdown(f"""
-        <div class="header-container">
-            <img src="{base64_logo}" style="width: 250px; margin-bottom: 10px;" alt="Logo Lexiguard">
-            <div class="tabs-container">
-                <div class="tab tab-active">Particulier</div>
-                <div class="tab">Professionnel <span style='font-size: 10px; color: #6366F1;'>OFFRE PRO</span></div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+    <div class="header-container">
+    <img src="{base64_logo}" style="width: 250px; margin-bottom: 10px;" alt="Logo Lexiguard">
+    <div class="tabs-container">
+    <div class="tab tab-active">Particulier</div>
+    <div class="tab">Professionnel <span style='font-size: 10px; color: #6366F1;'>OFFRE PRO</span></div>
+    </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # --- CONTENU DE L'INTERFACE JURIDIQUE (SIMULATION) ---
 
